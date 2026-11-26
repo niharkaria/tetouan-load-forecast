@@ -29,7 +29,7 @@ def load_demo():
 bundle = load_model()
 model = bundle["model"]
 
-mode = st.radio("Mode", ["Backtest demo (held-out days)", "Upload my own history"],
+mode = st.radio("Mode", ["Backtest demo (Dec 3-30, not in training)", "Upload my own history"],
                 horizontal=True)
 
 if mode.startswith("Backtest"):
@@ -53,9 +53,10 @@ if mode.startswith("Backtest"):
     c1.metric("Model MAE for this day", f"{(forecast - actual).abs().mean():,.0f}")
     c2.metric("Day-type baseline MAE", f"{(baseline - actual).abs().mean():,.0f}")
     st.line_chart(pd.DataFrame({"actual": actual, "model": forecast, "baseline": baseline}))
-    st.caption(f"The model was trained on data up to {bundle['trained_until']}, so these days "
-               "were held out. One day is a noisy sample: the six-fold walk-forward result "
-               "in the README is the real evidence.")
+    st.caption(f"The model's weights were trained on data up to {bundle['trained_until']}, so these "
+               "days were not in training. They are also walk-forward fold 6, which was used when "
+               "choosing the model, so this is a demo, not an independent test. One day is a noisy "
+               "sample: the six-fold results in the README are the evidence.")
 else:
     st.write("Upload a CSV whose first column is the timestamp and which has a `total` load "
              "column. Hourly, no gaps, ending at 23:00, at least 192 rows (8 days). "
