@@ -29,7 +29,7 @@ def load_demo():
 bundle = load_model()
 model = bundle["model"]
 
-mode = st.radio("Mode", ["Backtest demo (Dec 3-30, not in training)", "Upload my own history"],
+mode = st.radio("Mode", ["Backtest demo (Dec 3 to 30)", "Upload my own history"],
                 horizontal=True)
 
 if mode.startswith("Backtest"):
